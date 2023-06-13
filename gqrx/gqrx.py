@@ -22,7 +22,7 @@ stop_freq = 108e6
 step_size = 100e3
 
 # Time to wait for gqrx to process each step (in seconds)
-wait_time = 0.1
+wait_time = 0.001
 
 # Collecting the data
 frequencies = np.arange(start_freq, stop_freq, step_size)
@@ -32,7 +32,9 @@ for freq in frequencies:
     gqrx_command(f'F {freq}\n')  # Set frequency
     time.sleep(wait_time)  # Wait for gqrx to process
     response = gqrx_command('l STRENGTH\n')  # Get signal strength
-    signal_strength = float(response.split()[1])
+
+    signal_strength = float(response)
+    print(signal_strength)
     waterfall_data.append(signal_strength)
 
 # Display the waterfall plot
